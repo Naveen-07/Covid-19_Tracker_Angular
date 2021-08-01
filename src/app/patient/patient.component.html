@@ -1,0 +1,42 @@
+<app-navigationbar></app-navigationbar>
+<div style="padding-top: 70px;">
+    <app-spinner></app-spinner>
+</div>
+<div class="container-sm  text-center">
+    <h4>COVID-19 CORONAVIRUS PANDEMIC IN INDIA</h4>
+    <p>Click on button to see the deatials </p>
+</div>
+
+<div class="container">
+    <div class="form-group">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" [(ngModel)]="reverse" id="reverse" />
+            <label class="custom-control-label" for="reverse">Want to See in order by Serial Number ?</label>
+            <div class="text-right">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="maleFemale" id="maleFemale" />
+                <label class="custom-control-label" for="maleFemale">Show Male Female</label>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!maleFemale">
+        <div class="flex-container" style="flex-direction: row; padding-left: 5px; box-sizing: border-box;display: flex;flex-wrap: wrap;">
+            <div *ngFor="let deathAndRecoveries of patientsList|  orderBy : order : reverse">
+                <button matTooltip=" Serial Number {{deathAndRecoveries.slno}}" type="button" class="btn btn-primary" (click)="openDialog(deathAndRecoveries)"></button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="maleFemale">
+        <div class="container sm-col text-right">
+            <button type="button" class="btn btn-success"></button> MALE
+            <button type="button" class="btn btn-info"></button> Female
+            <button type="button" class="btn btn-warning"></button> Not Known
+        </div>
+        <div class="flex-container" style="flex-direction: row; padding-left: 5px; box-sizing: border-box;display: flex;flex-wrap: wrap;">
+            <div *ngFor="let deathAndRecoveries of patientsList|  orderBy : order : reverse">
+                <button matTooltip=" Serial Number {{deathAndRecoveries.slno}}, Gender: Male" *ngIf="deathAndRecoveries.gender==='M'" type="button" class="btn btn-success" (click)="openDialog(deathAndRecoveries)"></button>
+                <button matTooltip=" Serial Number {{deathAndRecoveries.slno}}, Gender: Female" *ngIf="deathAndRecoveries.gender==='F'" type="button" class="btn btn-info" (click)="openDialog(deathAndRecoveries)"></button>
+                <button matTooltip=" Serial Number {{deathAndRecoveries.slno}}, Gender: Not known" *ngIf="deathAndRecoveries.gender===''" type=" button " class="btn btn-warning" (click)="openDialog(deathAndRecoveries) "></button>
+            </div>
+        </div>
+    </div>
+</div>
